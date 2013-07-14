@@ -30,4 +30,18 @@ public class StringUtils {
         }
         return string;
     }
+
+    public static String replace(String string, String search, String replace) {
+        int beginIndex = 0;
+        int endIndex = 0;
+        StringBuilder sb = new StringBuilder();
+        while ((endIndex = string.indexOf(search, beginIndex)) != -1) {
+            sb.append(string.substring(beginIndex, endIndex));
+            sb.append(replace);
+            beginIndex = endIndex + search.length();
+        }
+
+        sb.append(string.substring(beginIndex));
+        return sb.toString();
+    }
 }

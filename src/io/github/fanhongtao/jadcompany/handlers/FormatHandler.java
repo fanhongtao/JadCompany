@@ -15,9 +15,11 @@
  */
 package io.github.fanhongtao.jadcompany.handlers;
 
+import io.github.fanhongtao.jadcompany.format.IFormatter;
+import io.github.fanhongtao.jadcompany.format.StringBuilderFormatter;
 import io.github.fanhongtao.jadcompany.ui.VirtualEditor;
-import io.github.fanhongtao.jadcompany.utils.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -28,54 +30,28 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.texteditor.ITextEditor;
 
-/**
- * Our sample handler extends AbstractHandler, an IHandler base class.
- * @see org.eclipse.core.commands.IHandler
- * @see org.eclipse.core.commands.AbstractHandler
- */
-public class CommentHandler extends AbstractHandler {
-    /**
-     * The constructor.
-     */
-    public CommentHandler() {
+public class FormatHandler extends AbstractHandler {
+
+    private List<IFormatter> formatterList;
+
+    public FormatHandler() {
+        formatterList = new ArrayList<IFormatter>();
+        formatterList.add(new StringBuilderFormatter());
     }
 
-    /**
-     * the command has been executed, so extract extract the needed information
-     * from the application context.
-     */
     public Object execute(ExecutionEvent event) throws ExecutionException {
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         IEditorPart editorPart = window.getActivePage().getActiveEditor();
         if (editorPart != null && (editorPart instanceof ITextEditor)) {
             VirtualEditor editor = new VirtualEditor((ITextEditor) editorPart);
-            List<String> lines = editor.getSelectedTextInList();
+            List<String> selectedText = editor.getSelectedTextInList();
 
-            StringBuilder sb = new StringBuilder();
-            for (int index = 0; index < lines.size(); index++) {
-                if (index != 0) {
-                    sb.append(StringUtils.CRLF);
+            for (IFormatter formatter : formatterList) {
+                if (formatter.needFormat(selectedText)) {
+                    formatter.format(editor, selectedText);
+                    break;
                 }
-
-                String line = lines.get(index);
-                sb.append(line);
-
-                String tmp = line.trim();
-                if (tmp.isEmpty()) {
-                    continue;
-                }
-
-                tmp = StringUtils.stringBefore(tmp, " = ");
-                tmp = StringUtils.stringBefore(tmp, " extends ");
-                tmp = StringUtils.stringBefore(tmp, " implements ");
-                tmp = StringUtils.stringBefore(tmp, " {");
-                tmp = StringUtils.stringBefore(tmp, "(");
-                tmp = StringUtils.stringBefore(tmp, ";");
-
-                String tokens[] = tmp.split("\\b");
-                sb.append(" // ").append(tokens[tokens.length - 1]);
             }
-            editor.replaceSelectedText(sb.toString());
         }
 
         return null;

@@ -13,12 +13,21 @@
             categoryId="io.github.fanhongtao.JadCompany.commands.category"
             id="io.github.fanhongtao.JadCompany.commands.commentIdCommand">
       </command>
+      <command
+            name="Format"
+            categoryId="io.github.fanhongtao.JadCompany.commands.category"
+            id="io.github.fanhongtao.JadCompany.commands.formatCommand">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
             class="io.github.fanhongtao.jadcompany.handlers.CommentHandler">
+      </handler>
+      <handler
+            commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
+            class="io.github.fanhongtao.jadcompany.handlers.FormatHandler">
       </handler>
    </extension>
    <extension
@@ -27,6 +36,12 @@
             commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
             contextId="org.eclipse.ui.contexts.window"
             sequence="M1+6"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+      <key
+            commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+7"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
    </extension>
@@ -43,6 +58,11 @@
                   mnemonic="S"
                   id="io.github.fanhongtao.JadCompany.menus.commentIdCommand">
             </command>
+             <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
+                  mnemonic="S"
+                  id="io.github.fanhongtao.JadCompany.menus.formatCommand">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -54,6 +74,12 @@
                   icon="icons/comment.gif"
                   tooltip="Comment IDs"
                   id="io.github.fanhongtao.JadCompany.toolbars.commentIdCommand">
+            </command>
+            <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
+                  icon="icons/format.gif"
+                  tooltip="Format"
+                  id="io.github.fanhongtao.JadCompany.toolbars.formatCommand">
             </command>
          </toolbar>
       </menuContribution>

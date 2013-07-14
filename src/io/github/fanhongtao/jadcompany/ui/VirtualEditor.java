@@ -69,7 +69,7 @@ public class VirtualEditor {
      * Get selected contents of current editor.
      * @return A list of strings. One for each line.
      */
-    public List<String> getSelectionTextInList() {
+    public List<String> getSelectedTextInList() {
         List<String> list = new ArrayList<String>();
         String selectedText = getSelectedText();
         if (selectedText != null) {
