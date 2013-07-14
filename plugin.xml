@@ -51,8 +51,8 @@
                id="io.github.fanhongtao.JadCompany.toolbars.commentIdToolbar">
             <command
                   commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
+                  icon="icons/comment.gif"
+                  tooltip="Comment IDs"
                   id="io.github.fanhongtao.JadCompany.toolbars.commentIdCommand">
             </command>
          </toolbar>
