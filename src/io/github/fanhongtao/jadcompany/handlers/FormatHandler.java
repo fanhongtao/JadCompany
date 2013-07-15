@@ -17,6 +17,7 @@ package io.github.fanhongtao.jadcompany.handlers;
 
 import io.github.fanhongtao.jadcompany.format.IFormatter;
 import io.github.fanhongtao.jadcompany.format.StringBuilderFormatter;
+import io.github.fanhongtao.jadcompany.format.SwitchFormatter;
 import io.github.fanhongtao.jadcompany.ui.VirtualEditor;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class FormatHandler extends AbstractHandler {
     public FormatHandler() {
         formatterList = new ArrayList<IFormatter>();
         formatterList.add(new StringBuilderFormatter());
+        formatterList.add(new SwitchFormatter());
     }
 
     public Object execute(ExecutionEvent event) throws ExecutionException {
