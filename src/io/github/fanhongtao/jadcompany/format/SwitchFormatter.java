@@ -109,7 +109,7 @@ public class SwitchFormatter implements IFormatter {
             }
             sb.append("break;").append(StringUtils.CRLF);
         }
-        sb.append(StringUtils.CRLF);
+        sb.append("}").append(StringUtils.CRLF);
 
         editor.replaceSelectedText(sb.toString());
     }
