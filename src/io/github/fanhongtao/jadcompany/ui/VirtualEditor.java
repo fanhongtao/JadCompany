@@ -24,11 +24,13 @@ import java.util.List;
 
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
+import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 
 /** 
@@ -96,5 +98,21 @@ public class VirtualEditor {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
+    }
+
+    public IDocument getCurrentDocument() {
+        IDocumentProvider dp = editor.getDocumentProvider();
+        return dp.getDocument(editor.getEditorInput());
+    }
+
+    public void selectCurrentLine() throws BadLocationException {
+        ITextSelection selection = getSelection();
+        IDocument doc = getCurrentDocument();
+        IRegion line = doc.getLineInformation(selection.getStartLine());
+
+        TextSelection textSelection = new TextSelection(doc, line.getOffset(), line.getLength());
+
+        ISelectionProvider selectionProvider = editor.getSelectionProvider();
+        selectionProvider.setSelection(textSelection);
     }
 }
