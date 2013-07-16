@@ -27,8 +27,6 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -48,27 +46,22 @@ public class FormatHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         IEditorPart editorPart = window.getActivePage().getActiveEditor();
-        if (editorPart != null && (editorPart instanceof ITextEditor)) {
-            VirtualEditor editor = new VirtualEditor((ITextEditor) editorPart);
 
-            // Select current line if nothing is selected
-            ITextSelection selection = editor.getSelection();
-            if (selection.getLength() == 0) {
-                try {
-                    editor.selectCurrentLine();
-                } catch (BadLocationException e) {
-                    new ExecutionException("Failed to select current line", e);
+        try {
+            if (editorPart != null && (editorPart instanceof ITextEditor)) {
+                VirtualEditor editor = new VirtualEditor((ITextEditor) editorPart);
+                editor.selectCurrentLineIfNoSelection();
+                List<String> selectedText = editor.getSelectedTextInList();
+
+                for (IFormatter formatter : formatterList) {
+                    if (formatter.needFormat(selectedText)) {
+                        formatter.format(editor, selectedText);
+                        break;
+                    }
                 }
             }
-
-            List<String> selectedText = editor.getSelectedTextInList();
-
-            for (IFormatter formatter : formatterList) {
-                if (formatter.needFormat(selectedText)) {
-                    formatter.format(editor, selectedText);
-                    break;
-                }
-            }
+        } catch (Exception e) {
+            throw new ExecutionException("Failed to format.", e);
         }
 
         return null;

@@ -45,7 +45,7 @@ public class IntentFormatter implements IFormatter {
     }
 
     @Override
-    public void format(VirtualEditor editor, List<String> selectedText) {
+    public void format(VirtualEditor editor, List<String> selectedText) throws Exception {
         String firstLine = selectedText.get(0);
 
         int index1 = -1;

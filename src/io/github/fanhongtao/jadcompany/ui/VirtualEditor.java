@@ -70,34 +70,28 @@ public class VirtualEditor {
     /**
      * Get selected contents of current editor.
      * @return A list of strings. One for each line.
+     * @throws IOException 
      */
-    public List<String> getSelectedTextInList() {
+    public List<String> getSelectedTextInList() throws IOException {
         List<String> list = new ArrayList<String>();
         String selectedText = getSelectedText();
         if (selectedText != null) {
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
-                        selectedText.getBytes())));
-                String line = reader.readLine();
-                while (line != null) {
-                    list.add(line);
-                    line = reader.readLine();
-                }
-            } catch (IOException ex) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(
+                    selectedText.getBytes())));
+            String line = reader.readLine();
+            while (line != null) {
+                list.add(line);
+                line = reader.readLine();
             }
         }
         return list;
     }
 
-    public void replaceSelectedText(String replaceText) {
+    public void replaceSelectedText(String replaceText) throws BadLocationException {
         TextSelection selection = (TextSelection) getSelection();
         AbstractTextEditor textEditor = (AbstractTextEditor) editor;
         IDocument document = textEditor.getDocumentProvider().getDocument(editor.getEditorInput());
-        try {
-            document.replace(selection.getOffset(), selection.getLength(), replaceText);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
+        document.replace(selection.getOffset(), selection.getLength(), replaceText);
     }
 
     public IDocument getCurrentDocument() {
@@ -106,13 +100,23 @@ public class VirtualEditor {
     }
 
     public void selectCurrentLine() throws BadLocationException {
-        ITextSelection selection = getSelection();
+        ITextSelection oldSelection = getSelection();
         IDocument doc = getCurrentDocument();
-        IRegion line = doc.getLineInformation(selection.getStartLine());
+        IRegion line = doc.getLineInformation(oldSelection.getStartLine());
 
-        TextSelection textSelection = new TextSelection(doc, line.getOffset(), line.getLength());
-
+        TextSelection newSelection = new TextSelection(doc, line.getOffset(), line.getLength());
         ISelectionProvider selectionProvider = editor.getSelectionProvider();
-        selectionProvider.setSelection(textSelection);
+        selectionProvider.setSelection(newSelection);
+    }
+
+    /**
+     * Select current line if nothing is selected
+     * @throws BadLocationException
+     */
+    public void selectCurrentLineIfNoSelection() throws BadLocationException {
+        ITextSelection selection = getSelection();
+        if (selection.getLength() == 0) {
+            selectCurrentLine();
+        }
     }
 }

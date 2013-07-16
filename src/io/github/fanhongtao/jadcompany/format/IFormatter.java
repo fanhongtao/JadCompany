@@ -25,6 +25,6 @@ import java.util.List;
  */
 public interface IFormatter {
     public boolean needFormat(List<String> selectedText);
-    
-    public void format(VirtualEditor editor, List<String> selectedText);
+
+    public void format(VirtualEditor editor, List<String> selectedText) throws Exception;
 }

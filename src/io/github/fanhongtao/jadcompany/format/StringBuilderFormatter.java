@@ -33,7 +33,7 @@ public class StringBuilderFormatter implements IFormatter {
     }
 
     @Override
-    public void format(VirtualEditor editor, List<String> selectedText) {
+    public void format(VirtualEditor editor, List<String> selectedText) throws Exception {
         StringBuilder sb = new StringBuilder(selectedText.get(0));
         for (int i = 1, n = selectedText.size(); i < n; i++) {
             sb.append(selectedText.get(i).trim());

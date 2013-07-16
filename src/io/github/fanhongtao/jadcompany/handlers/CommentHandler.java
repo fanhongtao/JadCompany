@@ -47,35 +47,41 @@ public class CommentHandler extends AbstractHandler {
     public Object execute(ExecutionEvent event) throws ExecutionException {
         IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
         IEditorPart editorPart = window.getActivePage().getActiveEditor();
-        if (editorPart != null && (editorPart instanceof ITextEditor)) {
-            VirtualEditor editor = new VirtualEditor((ITextEditor) editorPart);
-            List<String> lines = editor.getSelectedTextInList();
+        try {
+            if (editorPart != null && (editorPart instanceof ITextEditor)) {
+                VirtualEditor editor = new VirtualEditor((ITextEditor) editorPart);
+                editor.selectCurrentLineIfNoSelection();
+                List<String> lines = editor.getSelectedTextInList();
 
-            StringBuilder sb = new StringBuilder();
-            for (int index = 0; index < lines.size(); index++) {
-                if (index != 0) {
-                    sb.append(StringUtils.CRLF);
+                StringBuilder sb = new StringBuilder();
+                for (int index = 0; index < lines.size(); index++) {
+                    if (index != 0) {
+                        sb.append(StringUtils.CRLF);
+                    }
+
+                    String line = lines.get(index);
+                    sb.append(line);
+
+                    String tmp = line.trim();
+                    if (tmp.isEmpty()) {
+                        continue;
+                    }
+
+                    tmp = StringUtils.stringBefore(tmp, " = ");
+                    tmp = StringUtils.stringBefore(tmp, " extends ");
+                    tmp = StringUtils.stringBefore(tmp, " implements ");
+                    tmp = StringUtils.stringBefore(tmp, " {");
+                    tmp = StringUtils.stringBefore(tmp, "(");
+                    tmp = StringUtils.stringBefore(tmp, ";");
+
+                    String tokens[] = tmp.split("\\b");
+                    sb.append(" // ").append(tokens[tokens.length - 1]);
                 }
 
-                String line = lines.get(index);
-                sb.append(line);
-
-                String tmp = line.trim();
-                if (tmp.isEmpty()) {
-                    continue;
-                }
-
-                tmp = StringUtils.stringBefore(tmp, " = ");
-                tmp = StringUtils.stringBefore(tmp, " extends ");
-                tmp = StringUtils.stringBefore(tmp, " implements ");
-                tmp = StringUtils.stringBefore(tmp, " {");
-                tmp = StringUtils.stringBefore(tmp, "(");
-                tmp = StringUtils.stringBefore(tmp, ";");
-
-                String tokens[] = tmp.split("\\b");
-                sb.append(" // ").append(tokens[tokens.length - 1]);
+                editor.replaceSelectedText(sb.toString());
             }
-            editor.replaceSelectedText(sb.toString());
+        } catch (Exception e) {
+            throw new ExecutionException("Failed to comment ID(s)", e);
         }
 
         return null;

@@ -42,7 +42,7 @@ public class SwitchFormatter implements IFormatter {
     }
 
     @Override
-    public void format(VirtualEditor editor, List<String> selectedText) {
+    public void format(VirtualEditor editor, List<String> selectedText) throws Exception {
         List<String> lines = new ArrayList<String>(selectedText);
         String var = lines.remove(0).trim().replace(";", "");
         int labelIndex = -1;
