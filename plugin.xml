@@ -63,6 +63,11 @@
                mnemonic="M"
                id="io.github.fanhongtao.JadCompany.menus.commentIdMenu">
             <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
+                  mnemonic="A"
+                  id="io.github.fanhongtao.JadCompany.menus.androidResourceCommand">
+            </command>
+            <command
                   commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
                   mnemonic="C"
                   id="io.github.fanhongtao.JadCompany.menus.commentIdCommand">
@@ -72,17 +77,18 @@
                   mnemonic="F"
                   id="io.github.fanhongtao.JadCompany.menus.formatCommand">
             </command>
-            <command
-                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
-                  mnemonic="A"
-                  id="io.github.fanhongtao.JadCompany.menus.androidResourceCommand">
-            </command>
          </menu>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
                id="io.github.fanhongtao.JadCompany.toolbars.commentIdToolbar">
+            <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
+                  icon="icons/android.gif"
+                  tooltip="Android Resource"
+                  id="io.github.fanhongtao.JadCompany.toolbars.androidResourceCommand">
+            </command>
             <command
                   commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
                   icon="icons/comment.gif"
@@ -94,12 +100,6 @@
                   icon="icons/format.gif"
                   tooltip="Format"
                   id="io.github.fanhongtao.JadCompany.toolbars.formatCommand">
-            </command>
-            <command
-                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
-                  icon="icons/android.gif"
-                  tooltip="Android Resource"
-                  id="io.github.fanhongtao.JadCompany.toolbars.androidResourceCommand">
             </command>
          </toolbar>
       </menuContribution>
