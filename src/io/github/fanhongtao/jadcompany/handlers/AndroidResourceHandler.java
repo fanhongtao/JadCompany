@@ -107,6 +107,9 @@ public class AndroidResourceHandler extends AbstractHandler {
             }
         }
 
+        // add additional resources.
+        addAdditioalResources(map);
+
         // change
         StringBuilder sb = new StringBuilder();
         for (String line : selectedText) {
@@ -122,5 +125,20 @@ public class AndroidResourceHandler extends AbstractHandler {
         }
 
         editor.replaceSelectedText(sb.toString());
+    }
+
+    private void addAdditioalResources(Map<String, String> map) {
+        // For visibility
+        map.put("setVisibility(0)", "setVisibility(View.VISIBLE)");
+        map.put("setVisibility(4)", "setVisibility(View.INVISIBLE)");
+        map.put("setVisibility(8)", "setVisibility(View.GONE)");
+
+        map.put("getVisibility() == 0", "getVisibility() == View.VISIBLE");
+        map.put("getVisibility() == 4", "getVisibility() == View.INVISIBLE");
+        map.put("getVisibility() == 8", "getVisibility() == View.GONE");
+
+        map.put("getVisibility() != 0", "getVisibility() != View.VISIBLE");
+        map.put("getVisibility() != 4", "getVisibility() != View.INVISIBLE");
+        map.put("getVisibility() != 8", "getVisibility() != View.GONE");
     }
 }
