@@ -18,6 +18,11 @@
             categoryId="io.github.fanhongtao.JadCompany.commands.category"
             id="io.github.fanhongtao.JadCompany.commands.formatCommand">
       </command>
+      <command
+            name="Android Resource"
+            categoryId="io.github.fanhongtao.JadCompany.commands.category"
+            id="io.github.fanhongtao.JadCompany.commands.androidResourceCommand">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -28,6 +33,10 @@
       <handler
             commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
             class="io.github.fanhongtao.jadcompany.handlers.FormatHandler">
+      </handler>
+      <handler
+            commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
+            class="io.github.fanhongtao.jadcompany.handlers.AndroidResourceHandler">
       </handler>
    </extension>
    <extension
@@ -55,13 +64,18 @@
                id="io.github.fanhongtao.JadCompany.menus.commentIdMenu">
             <command
                   commandId="io.github.fanhongtao.JadCompany.commands.commentIdCommand"
-                  mnemonic="S"
+                  mnemonic="C"
                   id="io.github.fanhongtao.JadCompany.menus.commentIdCommand">
             </command>
              <command
                   commandId="io.github.fanhongtao.JadCompany.commands.formatCommand"
-                  mnemonic="S"
+                  mnemonic="F"
                   id="io.github.fanhongtao.JadCompany.menus.formatCommand">
+            </command>
+            <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
+                  mnemonic="A"
+                  id="io.github.fanhongtao.JadCompany.menus.androidResourceCommand">
             </command>
          </menu>
       </menuContribution>
@@ -80,6 +94,12 @@
                   icon="icons/format.gif"
                   tooltip="Format"
                   id="io.github.fanhongtao.JadCompany.toolbars.formatCommand">
+            </command>
+            <command
+                  commandId="io.github.fanhongtao.JadCompany.commands.androidResourceCommand"
+                  icon="icons/android.gif"
+                  tooltip="Android Resource"
+                  id="io.github.fanhongtao.JadCompany.toolbars.androidResourceCommand">
             </command>
          </toolbar>
       </menuContribution>

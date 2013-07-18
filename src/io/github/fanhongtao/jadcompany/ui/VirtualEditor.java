@@ -99,6 +99,13 @@ public class VirtualEditor {
         return dp.getDocument(editor.getEditorInput());
     }
 
+    public void selectCurrentFile() {
+        IDocument doc = getCurrentDocument();
+        TextSelection newSelection = new TextSelection(doc, 0, doc.getLength());
+        ISelectionProvider selectionProvider = editor.getSelectionProvider();
+        selectionProvider.setSelection(newSelection);
+    }
+
     public void selectCurrentLine() throws BadLocationException {
         ITextSelection oldSelection = getSelection();
         IDocument doc = getCurrentDocument();
