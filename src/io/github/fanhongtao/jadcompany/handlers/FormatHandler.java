@@ -15,6 +15,7 @@
  */
 package io.github.fanhongtao.jadcompany.handlers;
 
+import io.github.fanhongtao.jadcompany.format.ForIteratorFormatter;
 import io.github.fanhongtao.jadcompany.format.IFormatter;
 import io.github.fanhongtao.jadcompany.format.IntentFormatter;
 import io.github.fanhongtao.jadcompany.format.StringBuilderFormatter;
@@ -41,6 +42,7 @@ public class FormatHandler extends AbstractHandler {
         formatterList.add(new StringBuilderFormatter());
         formatterList.add(new SwitchFormatter());
         formatterList.add(new IntentFormatter());
+        formatterList.add(new ForIteratorFormatter());
     }
 
     public Object execute(ExecutionEvent event) throws ExecutionException {
